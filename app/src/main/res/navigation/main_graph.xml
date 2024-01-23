@@ -1,6 +1,19 @@
 <?xml version="1.0" encoding="utf-8"?>
-<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+<navigation
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/main_graph">
+
+    android:id="@+id/main_graph"
+    app:startDestination="@id/exhibitFragment">
+
+    <fragment
+        android:id="@+id/mapFragment"
+        android:name="by.ssrlab.drukvkl.fragments.MapFragment"
+        android:label="MapFragment" />
+
+    <fragment
+        android:id="@+id/exhibitFragment"
+        android:name="by.ssrlab.drukvkl.fragments.ExhibitFragment"
+        android:label="ExhibitFragment" />
 
 </navigation>

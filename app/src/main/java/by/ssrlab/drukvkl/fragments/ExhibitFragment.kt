@@ -4,12 +4,12 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import by.ssrlab.drukvkl.databinding.FragmentMapBinding
+import by.ssrlab.drukvkl.databinding.FragmentExhibitionBinding
 import by.ssrlab.drukvkl.fragments.base.BaseFragment
 
-class MapFragment: BaseFragment() {
+class ExhibitFragment: BaseFragment() {
 
-    private lateinit var binding: FragmentMapBinding
+    private lateinit var binding: FragmentExhibitionBinding
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -17,13 +17,9 @@ class MapFragment: BaseFragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        binding = FragmentMapBinding.inflate(layoutInflater)
-
-        binding.apply {
-            mapLocationHolder.isEnabled = false
-            mapLocationIc.isEnabled = false
-        }
+        binding = FragmentExhibitionBinding.inflate(layoutInflater)
 
         return binding.root
     }
+
 }
