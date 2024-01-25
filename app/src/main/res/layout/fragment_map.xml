@@ -40,9 +40,9 @@
             android:layout_height="wrap_content"
 
             android:src="@drawable/selector_location"
-            android:background="@drawable/ripple_img_button"
+            android:background="@drawable/ripple_common_button"
 
-            android:padding="24dp"
+            android:padding="16dp"
 
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
