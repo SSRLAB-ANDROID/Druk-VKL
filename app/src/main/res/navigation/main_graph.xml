@@ -4,16 +4,9 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
 
     android:id="@+id/main_graph"
-    app:startDestination="@id/exhibitFragment">
+    app:startDestination="@id/main_list_graph">
 
-    <fragment
-        android:id="@+id/mapFragment"
-        android:name="by.ssrlab.drukvkl.fragments.MapFragment"
-        android:label="MapFragment" />
-
-    <fragment
-        android:id="@+id/exhibitFragment"
-        android:name="by.ssrlab.drukvkl.fragments.ExhibitFragment"
-        android:label="ExhibitFragment" />
+    <include app:graph="@navigation/main_list_graph"/>
+    <include app:graph="@navigation/main_map_graph"/>
 
 </navigation>
