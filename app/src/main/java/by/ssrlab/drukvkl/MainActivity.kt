@@ -6,6 +6,7 @@ import android.view.WindowManager
 import android.view.animation.AnimationUtils
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
 import by.ssrlab.drukvkl.databinding.ActivityMainBinding
@@ -71,7 +72,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun hideHeader() {
         binding.mainHeader.apply {
-            startAnimation(AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_alpha_hide))
+            startAnimation(AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_alpha_exit))
             visibility = View.GONE
         }
     }
@@ -80,6 +81,26 @@ class MainActivity : AppCompatActivity() {
         binding.mainHeader.apply {
             startAnimation(AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_alpha_enter))
             visibility = View.VISIBLE
+        }
+    }
+
+    fun showBack() {
+        binding.mainBack.apply {
+            if (visibility == View.GONE) {
+                startAnimation(AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_alpha_enter))
+                visibility = View.VISIBLE
+
+                setOnClickListener { findNavController().popBackStack() }
+            }
+        }
+    }
+
+    fun hideBack() {
+        binding.mainBack.apply {
+            if (visibility == View.VISIBLE) {
+                startAnimation(AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_alpha_exit))
+                visibility = View.GONE
+            }
         }
     }
 }
