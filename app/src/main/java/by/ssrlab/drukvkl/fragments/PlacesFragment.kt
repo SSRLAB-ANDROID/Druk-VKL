@@ -6,10 +6,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import by.ssrlab.drukvkl.R
 import by.ssrlab.drukvkl.databinding.FragmentPlacesListBinding
 import by.ssrlab.drukvkl.db.Place
 import by.ssrlab.drukvkl.fragments.base.BaseFragment
-import by.ssrlab.drukvkl.helpers.CITY_TITLE
 import by.ssrlab.drukvkl.rv.PlacesListAdapter
 
 class PlacesFragment: BaseFragment() {
@@ -27,7 +27,7 @@ class PlacesFragment: BaseFragment() {
 
         binding = FragmentPlacesListBinding.inflate(layoutInflater)
 
-        getBundle()
+        title = getTitle()
 
         return binding.root
     }
@@ -42,17 +42,13 @@ class PlacesFragment: BaseFragment() {
     private fun initAdapter() {
         val list = arrayListOf(Place(1, "Place 1"), Place(2, "Place 2"))
 
-        placesAdapter = PlacesListAdapter(list, title)
+        placesAdapter = PlacesListAdapter(list, title) {
+            navigateNext(it, R.id.action_placesFragment_to_exhibitFragment)
+        }
 
         binding.placesRv.apply {
             layoutManager = LinearLayoutManager(mainActivity)
             adapter = placesAdapter
         }
-    }
-
-    private fun getBundle() {
-        val bundle = arguments
-
-        title = bundle?.getString(CITY_TITLE) ?: ""
     }
 }

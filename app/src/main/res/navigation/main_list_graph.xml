@@ -19,6 +19,14 @@
             app:exitAnim="@anim/anim_nav_exit"
             app:popEnterAnim="@anim/anim_nav_pop_enter"
             app:popExitAnim="@anim/anim_nav_pop_exit"/>
+        <action
+            android:id="@+id/action_citiesFragment_to_exhibitFragment"
+            app:destination="@id/exhibitFragment"
+
+            app:enterAnim="@anim/anim_nav_enter"
+            app:exitAnim="@anim/anim_nav_exit"
+            app:popEnterAnim="@anim/anim_nav_pop_enter"
+            app:popExitAnim="@anim/anim_nav_pop_exit"/>
 
     </fragment>
 
@@ -28,8 +36,8 @@
         android:label="PlacesFragment">
 
         <action
-            android:id="@+id/action_placesFragment_to_citiesFragment"
-            app:destination="@id/citiesFragment"
+            android:id="@+id/action_placesFragment_to_exhibitFragment"
+            app:destination="@id/exhibitFragment"
 
             app:enterAnim="@anim/anim_nav_enter"
             app:exitAnim="@anim/anim_nav_exit"
@@ -37,5 +45,10 @@
             app:popExitAnim="@anim/anim_nav_pop_exit"/>
 
     </fragment>
+
+    <fragment
+        android:id="@+id/exhibitFragment"
+        android:name="by.ssrlab.drukvkl.fragments.ExhibitFragment"
+        android:label="ExhibitFragment"/>
 
 </navigation>

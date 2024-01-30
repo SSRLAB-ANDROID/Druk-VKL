@@ -1,6 +1,5 @@
 package by.ssrlab.drukvkl.rv
 
-import android.annotation.SuppressLint
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -16,6 +15,7 @@ import by.ssrlab.drukvkl.helpers.RV_TITLE
 class PlacesListAdapter(
     private val list: ArrayList<Place>,
     private val pageTitle: String,
+    private val action: (String) -> Unit
 ): RecyclerView.Adapter<PlacesListAdapter.PlacesHolder>() {
 
     inner class PlacesHolder(item: View): RecyclerView.ViewHolder(item)
@@ -50,9 +50,7 @@ class PlacesListAdapter(
             val item = itemView.findViewById<ImageButton>(R.id.rv_common_ripple)
 
             title.text = place.name
-            item.setOnClickListener {
-                //TODO
-            }
+            item.setOnClickListener { action(place.name) }
         }
     }
 

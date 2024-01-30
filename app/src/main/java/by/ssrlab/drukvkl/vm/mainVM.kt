@@ -3,9 +3,11 @@ package by.ssrlab.drukvkl.vm
 import android.content.Context
 import android.view.View
 import android.view.animation.AnimationUtils
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import by.ssrlab.drukvkl.R
+import by.ssrlab.drukvkl.db.City
 
 @Suppress("StaticFieldLeak")
 class MainVM(private val context: Context): ViewModel() {
@@ -17,6 +19,8 @@ class MainVM(private val context: Context): ViewModel() {
             return MainVM(context) as T
         }
     }
+    
+    private val citiesList = MutableLiveData<City>()
 
     fun changeViewVisibility(view: View, toShow: Boolean = false, action: (() -> Unit)? = null) {
         val animEnter = AnimationUtils.loadAnimation(context, R.anim.anim_alpha_enter)

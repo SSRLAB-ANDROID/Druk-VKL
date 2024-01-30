@@ -4,14 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.core.os.bundleOf
-import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.ssrlab.drukvkl.R
 import by.ssrlab.drukvkl.databinding.FragmentCitiesListBinding
 import by.ssrlab.drukvkl.db.City
 import by.ssrlab.drukvkl.fragments.base.BaseFragment
-import by.ssrlab.drukvkl.helpers.CITY_TITLE
 import by.ssrlab.drukvkl.rv.CitiesListAdapter
 
 class CitiesFragment: BaseFragment() {
@@ -40,21 +37,16 @@ class CitiesFragment: BaseFragment() {
     private fun initAdapter() {
         val list = ArrayList<City>()
 
-        for (i in 1..7)
+        for (i in 1L..7L)
             list.add(City(i, i, "City $i"))
 
         citiesAdapter = CitiesListAdapter(list) {
-            navigateNext(it)
+            navigateNext(it, R.id.action_citiesFragment_to_placesFragment)
         }
 
         binding.citiesRv.apply {
             layoutManager = LinearLayoutManager(mainActivity)
             adapter = citiesAdapter
         }
-    }
-
-    private fun navigateNext(title: String) {
-        val bundle = bundleOf(Pair(CITY_TITLE, title))
-        findNavController().navigate(R.id.action_citiesFragment_to_placesFragment, bundle)
     }
 }

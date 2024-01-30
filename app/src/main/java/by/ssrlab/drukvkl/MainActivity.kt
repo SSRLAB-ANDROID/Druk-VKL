@@ -6,9 +6,9 @@ import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import by.ssrlab.drukvkl.client.FireClient
 import by.ssrlab.drukvkl.databinding.ActivityMainBinding
 import by.ssrlab.drukvkl.vm.MainVM
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -33,8 +33,15 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        loadData()
         setUpBottomNav()
         addGraphListener()
+    }
+
+    private fun loadData() {
+        FireClient().getCities("en") {
+            println(it)
+        }
     }
 
     private fun setUpBottomNav() {
