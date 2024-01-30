@@ -31,12 +31,13 @@ class CitiesFragment: BaseFragment() {
         super.onStart()
 
         initAdapter()
+        mainActivity.hideBack()
     }
 
     private fun initAdapter() {
         val list = ArrayList<City>()
 
-        for (i in 1..20)
+        for (i in 1..7)
             list.add(City(i, i, "City $i"))
 
         citiesAdapter = CitiesListAdapter(list)
