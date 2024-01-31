@@ -27,7 +27,7 @@ class PlacesFragment: BaseFragment() {
 
         binding = FragmentPlacesListBinding.inflate(layoutInflater)
 
-        title = getTitle()
+        title = mainVM.getCities().find { it.id.toInt() == getItemId() }?.name.toString()
 
         return binding.root
     }

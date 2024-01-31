@@ -40,12 +40,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun loadData() {
         FireClient().getCities("en") {
-            println(it)
+            mainVM.setCities(it)
         }
     }
 
     private fun setUpBottomNav() {
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
         navController = navHostFragment.navController
 
         bottomNav = binding.mainBottomNav
@@ -55,40 +56,21 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun setTransparentStatusBar(isTransparent: Boolean = false) {
-        val window = window
-        if (!isTransparent) {
-            window.clearFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            )
-        } else {
-            window.setFlags(
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS,
-                WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS
-            )
-        }
-    }
-
     private fun addGraphListener() {
         navController.addOnDestinationChangedListener { _, destination, _ ->
-            if (destination.id == R.id.map) {
-                hideHeader()
-                setTransparentStatusBar(true)
-            } else {
-                showHeader()
-                setTransparentStatusBar()
-            }
+            if (destination.id == R.id.map) hideHeader()
+            else showHeader()
         }
     }
 
     private fun hideHeader() {
         if (binding.mainHeader.visibility == View.VISIBLE)
-            mainVM.changeViewVisibility(binding.mainHeader, true)
+            mainVM.changeViewVisibility(binding.mainHeader)
     }
 
     private fun showHeader() {
         if (binding.mainHeader.visibility == View.GONE)
-            mainVM.changeViewVisibility(binding.mainHeader)
+            mainVM.changeViewVisibility(binding.mainHeader, true)
     }
 
     fun hideBack() {
@@ -103,4 +85,6 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
+    fun getVM() = mainVM
 }

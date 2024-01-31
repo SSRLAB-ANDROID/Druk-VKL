@@ -10,6 +10,8 @@ import by.ssrlab.drukvkl.databinding.FragmentCitiesListBinding
 import by.ssrlab.drukvkl.db.City
 import by.ssrlab.drukvkl.fragments.base.BaseFragment
 import by.ssrlab.drukvkl.rv.CitiesListAdapter
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 class CitiesFragment: BaseFragment() {
 
@@ -30,15 +32,21 @@ class CitiesFragment: BaseFragment() {
     override fun onStart() {
         super.onStart()
 
-        initAdapter()
         mainActivity.hideBack()
+
+        scope.launch {
+            while (!mainVM.isCitiesLoaded) {
+                delay(500)
+            }
+
+            mainActivity.runOnUiThread {
+                initAdapter()
+            }
+        }
     }
 
     private fun initAdapter() {
-        val list = ArrayList<City>()
-
-        for (i in 1L..7L)
-            list.add(City(i, i, "City $i"))
+        val list = mainVM.getCities()
 
         citiesAdapter = CitiesListAdapter(list) {
             navigateNext(it, R.id.action_citiesFragment_to_placesFragment)

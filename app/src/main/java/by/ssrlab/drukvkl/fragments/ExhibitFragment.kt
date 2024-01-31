@@ -23,7 +23,7 @@ class ExhibitFragment: BaseFragment() {
 
         binding = FragmentExhibitBinding.inflate(layoutInflater)
 
-        binding.exhibitTitle.text = getTitle()
+//        binding.exhibitTitle.text = getTitle()
 
         return binding.root
     }
