@@ -3,18 +3,22 @@ package by.ssrlab.drukvkl
 import android.os.Bundle
 import android.view.View
 import android.view.WindowManager
-import android.view.animation.AnimationUtils
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import by.ssrlab.drukvkl.client.FireClient
 import by.ssrlab.drukvkl.databinding.ActivityMainBinding
+import by.ssrlab.drukvkl.vm.MainVM
 import com.google.android.material.bottomnavigation.BottomNavigationView
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
+    private val mainVM: MainVM by viewModels {
+        MainVM.Factory(this@MainActivity)
+    }
 
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var navController: NavController
@@ -29,8 +33,15 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        loadData()
         setUpBottomNav()
         addGraphListener()
+    }
+
+    private fun loadData() {
+        FireClient().getCities("en") {
+            println(it)
+        }
     }
 
     private fun setUpBottomNav() {
@@ -71,35 +82,24 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideHeader() {
-        binding.mainHeader.apply {
-            startAnimation(AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_alpha_exit))
-            visibility = View.GONE
-        }
+        if (binding.mainHeader.visibility == View.VISIBLE)
+            mainVM.changeViewVisibility(binding.mainHeader, true)
     }
 
     private fun showHeader() {
-        binding.mainHeader.apply {
-            startAnimation(AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_alpha_enter))
-            visibility = View.VISIBLE
-        }
-    }
-
-    fun showBack() {
-        binding.mainBack.apply {
-            if (visibility == View.GONE) {
-                startAnimation(AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_alpha_enter))
-                visibility = View.VISIBLE
-
-                setOnClickListener { findNavController().popBackStack() }
-            }
-        }
+        if (binding.mainHeader.visibility == View.GONE)
+            mainVM.changeViewVisibility(binding.mainHeader)
     }
 
     fun hideBack() {
-        binding.mainBack.apply {
-            if (visibility == View.VISIBLE) {
-                startAnimation(AnimationUtils.loadAnimation(this@MainActivity, R.anim.anim_alpha_exit))
-                visibility = View.GONE
+        if (binding.mainBack.visibility == View.VISIBLE)
+            mainVM.changeViewVisibility(binding.mainBack)
+    }
+
+    fun showBack(navController: NavController) {
+        if (binding.mainBack.visibility == View.GONE) {
+            mainVM.changeViewVisibility(binding.mainBack, true) {
+                navController.popBackStack()
             }
         }
     }

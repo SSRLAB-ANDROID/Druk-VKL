@@ -9,6 +9,46 @@
     <fragment
         android:id="@+id/citiesFragment"
         android:name="by.ssrlab.drukvkl.fragments.CitiesFragment"
-        android:label="CitiesFragment" />
+        android:label="CitiesFragment">
+
+        <action
+            android:id="@+id/action_citiesFragment_to_placesFragment"
+            app:destination="@id/placesFragment"
+
+            app:enterAnim="@anim/anim_nav_enter"
+            app:exitAnim="@anim/anim_nav_exit"
+            app:popEnterAnim="@anim/anim_nav_pop_enter"
+            app:popExitAnim="@anim/anim_nav_pop_exit"/>
+        <action
+            android:id="@+id/action_citiesFragment_to_exhibitFragment"
+            app:destination="@id/exhibitFragment"
+
+            app:enterAnim="@anim/anim_nav_enter"
+            app:exitAnim="@anim/anim_nav_exit"
+            app:popEnterAnim="@anim/anim_nav_pop_enter"
+            app:popExitAnim="@anim/anim_nav_pop_exit"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/placesFragment"
+        android:name="by.ssrlab.drukvkl.fragments.PlacesFragment"
+        android:label="PlacesFragment">
+
+        <action
+            android:id="@+id/action_placesFragment_to_exhibitFragment"
+            app:destination="@id/exhibitFragment"
+
+            app:enterAnim="@anim/anim_nav_enter"
+            app:exitAnim="@anim/anim_nav_exit"
+            app:popEnterAnim="@anim/anim_nav_pop_enter"
+            app:popExitAnim="@anim/anim_nav_pop_exit"/>
+
+    </fragment>
+
+    <fragment
+        android:id="@+id/exhibitFragment"
+        android:name="by.ssrlab.drukvkl.fragments.ExhibitFragment"
+        android:label="ExhibitFragment"/>
 
 </navigation>
