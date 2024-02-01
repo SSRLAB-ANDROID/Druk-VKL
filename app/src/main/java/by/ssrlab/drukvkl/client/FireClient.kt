@@ -1,12 +1,15 @@
 package by.ssrlab.drukvkl.client
 
+import android.net.Uri
 import by.ssrlab.drukvkl.db.City
 import com.google.firebase.Firebase
 import com.google.firebase.firestore.firestore
+import com.google.firebase.storage.FirebaseStorage
 
 class FireClient {
 
     private val fireStore = Firebase.firestore
+    private val storage = FirebaseStorage.getInstance().reference
 
     fun getCities(language: String, onSuccess: (ArrayList<City>) -> Unit) {
         fireStore.collection("cities").document(language).collection("ids")
@@ -31,5 +34,11 @@ class FireClient {
 
                 onSuccess(list)
             }
+    }
+
+    fun getImageAddress(path: String, imageId: Int, onSuccess: (Uri) -> Unit) {
+        storage.child("$path/$imageId.png").downloadUrl.addOnSuccessListener {
+            onSuccess(it)
+        }
     }
 }

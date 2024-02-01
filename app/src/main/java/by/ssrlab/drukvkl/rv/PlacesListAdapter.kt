@@ -15,7 +15,7 @@ import by.ssrlab.drukvkl.helpers.RV_TITLE
 class PlacesListAdapter(
     private val list: ArrayList<Place>,
     private val pageTitle: String,
-    private val action: (String) -> Unit
+    private val action: (Int) -> Unit
 ): RecyclerView.Adapter<PlacesListAdapter.PlacesHolder>() {
 
     inner class PlacesHolder(item: View): RecyclerView.ViewHolder(item)
@@ -50,7 +50,7 @@ class PlacesListAdapter(
             val item = itemView.findViewById<ImageButton>(R.id.rv_common_ripple)
 
             title.text = place.name
-            item.setOnClickListener { action(place.name) }
+            item.setOnClickListener { action(place.id) }
         }
     }
 
