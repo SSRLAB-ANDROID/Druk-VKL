@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import by.ssrlab.drukvkl.databinding.TabExhibitBinding
 import coil.load
-import coil.size.Precision
-import coil.size.Scale
 import coil.transform.RoundedCornersTransformation
 
 class TabExhibitFragment(private val imageAddress: Uri): Fragment() {

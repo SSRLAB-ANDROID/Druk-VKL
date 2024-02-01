@@ -83,6 +83,8 @@
         android:elevation="4dp"
         app:itemIconTint="@drawable/bottom_nav_selected"
 
+        app:menu="@menu/main_bottom_nav_menu"
+
         app:itemRippleColor="@android:color/transparent"
         app:itemIconSize="28dp"
 

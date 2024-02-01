@@ -8,6 +8,7 @@ import by.ssrlab.drukvkl.MainActivity
 import by.ssrlab.drukvkl.R
 import by.ssrlab.drukvkl.db.City
 import by.ssrlab.drukvkl.db.Place
+import by.ssrlab.drukvkl.db.Point
 
 @Suppress("StaticFieldLeak")
 class MainVM(private val activity: MainActivity): ViewModel() {
@@ -57,6 +58,15 @@ class MainVM(private val activity: MainActivity): ViewModel() {
         isCitiesLoaded = true
     }
     fun getCities() = citiesList
+
+    //Common points
+    private var pointsList = ArrayList<Point>()
+    var isPointsLoaded = false
+    fun setPoints(list: ArrayList<Point>) {
+        pointsList = list
+        isPointsLoaded = true
+    }
+    fun getPoints() = pointsList
 
     //Current city
     private var currentCity = City()

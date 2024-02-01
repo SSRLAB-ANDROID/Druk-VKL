@@ -37,8 +37,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun loadData() {
-        FireClient().getCities("en") {
-            mainVM.setCities(it)
+        FireClient().apply {
+            getCities("en") {
+                mainVM.setCities(it)
+            }
+
+            getPoints("en") {
+                mainVM.setPoints(it)
+            }
         }
     }
 
@@ -47,10 +53,7 @@ class MainActivity : AppCompatActivity() {
         navController = navHostFragment.navController
 
         bottomNav = binding.mainBottomNav
-        bottomNav.apply {
-            inflateMenu(R.menu.main_bottom_nav_menu)
-            setupWithNavController(navController)
-        }
+        bottomNav.setupWithNavController(navController)
     }
 
     private fun addGraphListener() {

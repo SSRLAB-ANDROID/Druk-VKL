@@ -66,8 +66,8 @@ class FireClient(private val activity: MainActivity? = null) {
             }
     }
 
-    fun getPoints(onSuccess: (ArrayList<Point>) -> Unit) {
-        fireStore.collection("points")
+    fun getPoints(language: String, onSuccess: (ArrayList<Point>) -> Unit) {
+        fireStore.collection("points_$language")
             .get()
             .addOnSuccessListener { result ->
                 val list = arrayListOf<Point>()
@@ -96,8 +96,8 @@ class FireClient(private val activity: MainActivity? = null) {
         }
     }
 
-    fun getImagesAddresses(path: String, id: Int, onSuccess: (ArrayList<Uri>) -> Unit) {
-        storage.child("$path/$id/images/").listAll().addOnSuccessListener { listResult ->
+    fun getImagesAddresses(path: String, cityId: Int, onSuccess: (ArrayList<Uri>) -> Unit) {
+        storage.child("$path/$cityId/images/").listAll().addOnSuccessListener { listResult ->
             val list = ArrayList<Uri>()
             val isDataLoaded = MutableLiveData<Boolean>()
             for (i in listResult.items) i.downloadUrl.addOnSuccessListener { uri ->
@@ -125,6 +125,18 @@ class FireClient(private val activity: MainActivity? = null) {
             isDataLoaded.observe(activity!!) {
                 if (it) onSuccess(list)
             }
+        }
+    }
+
+    fun getAudioAddress(path: String, cityId: Int, placeId: Int, onSuccess: (Uri) -> Unit) {
+        storage.child("$path/$cityId/audio/$placeId.mp3").downloadUrl.addOnSuccessListener { uri ->
+            onSuccess(uri)
+        }
+    }
+
+    fun getAudioAddress(path: String, cityId: Int, placeId: Int, audioId: Int, onSuccess: (Uri) -> Unit) {
+        storage.child("$path/$cityId/audio/$placeId/$audioId.mp3").downloadUrl.addOnSuccessListener { uri ->
+            onSuccess(uri)
         }
     }
 }
