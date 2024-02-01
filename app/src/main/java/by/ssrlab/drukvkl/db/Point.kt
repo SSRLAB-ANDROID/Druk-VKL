@@ -1,8 +1,8 @@
 package by.ssrlab.drukvkl.db
 
-data class Place(
+data class Point(
     val id: Long = 0,
-    val cityId: Long = 0,
     val name: String = "",
-    val text: String = ""
+    val lat: Double = 0.0,
+    val lng: Double = 0.0
 )

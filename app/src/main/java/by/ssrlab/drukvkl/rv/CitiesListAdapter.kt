@@ -15,13 +15,10 @@ import by.ssrlab.drukvkl.helpers.RV_EMPTY
 import by.ssrlab.drukvkl.helpers.RV_MAIN
 import by.ssrlab.drukvkl.helpers.RV_TITLE
 import coil.load
-import coil.size.Precision
-import coil.size.Scale
-import coil.transform.RoundedCornersTransformation
 
 class CitiesListAdapter(
     private val list: ArrayList<City>,
-    private val action: (Int) -> Unit
+    private val action: (City) -> Unit
 ): RecyclerView.Adapter<CitiesListAdapter.CitiesHolder>() {
 
     inner class CitiesHolder(item: View): RecyclerView.ViewHolder(item)
@@ -60,7 +57,7 @@ class CitiesListAdapter(
             val item = itemView.findViewById<ImageButton>(R.id.rv_common_ripple)
 
             title.text = city.name
-            item.setOnClickListener { action(city.id.toInt()) }
+            item.setOnClickListener { action(city) }
 
             FireClient().getImageAddress("cities", city.id.toInt()) {
                 image.load(it) {

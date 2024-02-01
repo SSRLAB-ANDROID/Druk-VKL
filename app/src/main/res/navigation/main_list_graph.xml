@@ -19,14 +19,6 @@
             app:exitAnim="@anim/anim_nav_exit"
             app:popEnterAnim="@anim/anim_nav_pop_enter"
             app:popExitAnim="@anim/anim_nav_pop_exit"/>
-        <action
-            android:id="@+id/action_citiesFragment_to_exhibitFragment"
-            app:destination="@id/exhibitFragment"
-
-            app:enterAnim="@anim/anim_nav_enter"
-            app:exitAnim="@anim/anim_nav_exit"
-            app:popEnterAnim="@anim/anim_nav_pop_enter"
-            app:popExitAnim="@anim/anim_nav_pop_exit"/>
 
     </fragment>
 

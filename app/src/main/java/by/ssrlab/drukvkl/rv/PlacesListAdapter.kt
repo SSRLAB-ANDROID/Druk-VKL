@@ -4,18 +4,22 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageButton
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import by.ssrlab.drukvkl.R
+import by.ssrlab.drukvkl.client.FireClient
+import by.ssrlab.drukvkl.db.City
 import by.ssrlab.drukvkl.db.Place
 import by.ssrlab.drukvkl.helpers.RV_EMPTY
 import by.ssrlab.drukvkl.helpers.RV_MAIN
 import by.ssrlab.drukvkl.helpers.RV_TITLE
+import coil.load
 
 class PlacesListAdapter(
     private val list: ArrayList<Place>,
-    private val pageTitle: String,
-    private val action: (Int) -> Unit
+    private val city: City,
+    private val action: (Place) -> Unit
 ): RecyclerView.Adapter<PlacesListAdapter.PlacesHolder>() {
 
     inner class PlacesHolder(item: View): RecyclerView.ViewHolder(item)
@@ -41,16 +45,24 @@ class PlacesListAdapter(
         if (position == RV_TITLE) {
 
             val title = itemView.findViewById<TextView>(R.id.rv_title)
-            title.text = pageTitle
+            title.text = city.name
         } else if (position < list.size + 1) {
 
             val place = list[position - 1]
 
             val title = itemView.findViewById<TextView>(R.id.rv_common_title)
             val item = itemView.findViewById<ImageButton>(R.id.rv_common_ripple)
+            val image = itemView.findViewById<ImageView>(R.id.rv_common_logo)
 
             title.text = place.name
-            item.setOnClickListener { action(place.id) }
+            item.setOnClickListener { action(place) }
+
+            FireClient().getImageAddress("places/${city.id}", place.id.toInt()) {
+                image.load(it) {
+                    crossfade(true)
+                    placeholder(R.drawable.background_img)
+                }
+            }
         }
     }
 

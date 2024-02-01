@@ -5,3 +5,4 @@ const val RV_MAIN = 1
 const val RV_EMPTY = 2
 
 const val CITY_TITLE = "city_title"
+const val PLACES_LIST = "places_list"

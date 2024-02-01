@@ -4,10 +4,11 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.ssrlab.drukvkl.R
+import by.ssrlab.drukvkl.client.FireClient
 import by.ssrlab.drukvkl.databinding.FragmentCitiesListBinding
-import by.ssrlab.drukvkl.db.City
 import by.ssrlab.drukvkl.fragments.base.BaseFragment
 import by.ssrlab.drukvkl.rv.CitiesListAdapter
 import kotlinx.coroutines.delay
@@ -49,7 +50,11 @@ class CitiesFragment: BaseFragment() {
         val list = mainVM.getCities()
 
         citiesAdapter = CitiesListAdapter(list) {
-            navigateNext(it, R.id.action_citiesFragment_to_placesFragment)
+            FireClient().getPlaces("en", it.id.toInt()) { list ->
+                mainVM.setCity(it)
+                mainVM.setPlaces(list)
+                findNavController().navigate(R.id.action_citiesFragment_to_placesFragment)
+            }
         }
 
         binding.citiesRv.apply {

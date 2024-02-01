@@ -1,8 +1,6 @@
 package by.ssrlab.drukvkl
 
 import android.os.Bundle
-import android.view.View
-import android.view.WindowManager
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
@@ -45,8 +43,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setUpBottomNav() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
+        val navHostFragment = supportFragmentManager.findFragmentById(R.id.main_container) as NavHostFragment
         navController = navHostFragment.navController
 
         bottomNav = binding.mainBottomNav
@@ -64,25 +61,20 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun hideHeader() {
-        if (binding.mainHeader.visibility == View.VISIBLE)
-            mainVM.changeViewVisibility(binding.mainHeader)
+        mainVM.hideView(binding.mainHeader)
     }
 
     private fun showHeader() {
-        if (binding.mainHeader.visibility == View.GONE)
-            mainVM.changeViewVisibility(binding.mainHeader, true)
+        mainVM.showView(binding.mainHeader)
     }
 
     fun hideBack() {
-        if (binding.mainBack.visibility == View.VISIBLE)
-            mainVM.changeViewVisibility(binding.mainBack)
+        mainVM.hideView(binding.mainBack)
     }
 
     fun showBack(navController: NavController) {
-        if (binding.mainBack.visibility == View.GONE) {
-            mainVM.changeViewVisibility(binding.mainBack, true) {
-                navController.popBackStack()
-            }
+        mainVM.showView(binding.mainBack) {
+            navController.popBackStack()
         }
     }
 
