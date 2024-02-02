@@ -52,7 +52,7 @@ class MapFragment: BaseFragment(), OnMapReadyCallback {
         map = googleMap
 
         scope.launch {
-            while (!mainVM.isPointsLoaded) {
+            while (!mainVM.arePointsLoaded()) {
                 delay(500)
             }
 

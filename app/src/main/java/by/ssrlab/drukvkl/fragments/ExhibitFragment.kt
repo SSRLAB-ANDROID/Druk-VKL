@@ -6,7 +6,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import by.ssrlab.drukvkl.client.FireClient
 import by.ssrlab.drukvkl.databinding.FragmentExhibitBinding
 import by.ssrlab.drukvkl.db.Place
 import by.ssrlab.drukvkl.fragments.base.BaseFragment
@@ -54,18 +53,8 @@ class ExhibitFragment: BaseFragment() {
             exhibitBody.text = place.text
         }
 
-        loadList()
-    }
-
-    private fun loadList() {
-        if (place.id.toInt() == 165 || place.id.toInt() == 171) {
-            FireClient(mainActivity).getImagesAddresses("places", place.cityId.toInt(), place.id.toInt()) {
-                setUpTabs(it)
-            }
-        } else {
-            FireClient(mainActivity).getImagesAddresses("places", place.cityId.toInt()) {
-                setUpTabs(it)
-            }
+        mainVM.loadImagesList {
+            setUpTabs(it)
         }
     }
 }

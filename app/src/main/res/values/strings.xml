@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">DrukVKL</string>
+    <string name="app_name">Druk VKL</string>
+    <string name="cities_title">Cities</string>
+    <string name="change_language">Change language</string>
+    <string name="language_en" translatable="false">English</string>
+    <string name="language_be" translatable="false">Беларуская</string>
 </resources>

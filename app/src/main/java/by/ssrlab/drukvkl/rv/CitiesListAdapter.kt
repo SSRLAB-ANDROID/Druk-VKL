@@ -7,9 +7,10 @@ import android.view.ViewGroup
 import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.RecyclerView
+import by.ssrlab.drukvkl.MainActivity
 import by.ssrlab.drukvkl.R
-import by.ssrlab.drukvkl.client.FireClient
 import by.ssrlab.drukvkl.db.City
 import by.ssrlab.drukvkl.helpers.RV_EMPTY
 import by.ssrlab.drukvkl.helpers.RV_MAIN
@@ -17,6 +18,7 @@ import by.ssrlab.drukvkl.helpers.RV_TITLE
 import coil.load
 
 class CitiesListAdapter(
+    private val activity: MainActivity,
     private val list: ArrayList<City>,
     private val action: (City) -> Unit
 ): RecyclerView.Adapter<CitiesListAdapter.CitiesHolder>() {
@@ -47,7 +49,7 @@ class CitiesListAdapter(
         if (position == RV_TITLE) {
 
             val title = itemView.findViewById<TextView>(R.id.rv_title)
-            title.text = "Cities"
+            title.text = ContextCompat.getString(activity, R.string.cities_title)
         } else if (position < list.size + 1) {
 
             val city = list[position - 1]
@@ -59,7 +61,7 @@ class CitiesListAdapter(
             title.text = city.name
             item.setOnClickListener { action(city) }
 
-            FireClient().getImageAddress("cities", city.id.toInt()) {
+            activity.getVM().getImageAddress("cities", city.id.toInt()) {
                 image.load(it) {
                     crossfade(true)
                     placeholder(R.drawable.background_img)

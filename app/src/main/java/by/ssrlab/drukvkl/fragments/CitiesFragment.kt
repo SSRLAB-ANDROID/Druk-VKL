@@ -7,7 +7,6 @@ import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.ssrlab.drukvkl.R
-import by.ssrlab.drukvkl.client.FireClient
 import by.ssrlab.drukvkl.databinding.FragmentCitiesListBinding
 import by.ssrlab.drukvkl.fragments.base.BaseFragment
 import by.ssrlab.drukvkl.rv.CitiesListAdapter
@@ -36,7 +35,7 @@ class CitiesFragment: BaseFragment() {
         mainActivity.hideBack()
 
         scope.launch {
-            while (!mainVM.isCitiesLoaded) {
+            while (!mainVM.areCitiesLoaded()) {
                 delay(500)
             }
 
@@ -49,10 +48,8 @@ class CitiesFragment: BaseFragment() {
     private fun initAdapter() {
         val list = mainVM.getCities()
 
-        citiesAdapter = CitiesListAdapter(list) {
-            FireClient().getPlaces("en", it.id.toInt()) { list ->
-                mainVM.setCity(it)
-                mainVM.setPlaces(list)
+        citiesAdapter = CitiesListAdapter(mainActivity, list) {
+            mainVM.getPlaces(it) {
                 findNavController().navigate(R.id.action_citiesFragment_to_placesFragment)
             }
         }
