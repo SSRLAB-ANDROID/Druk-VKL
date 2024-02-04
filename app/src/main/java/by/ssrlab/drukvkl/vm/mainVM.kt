@@ -93,6 +93,12 @@ class MainVM(
         }
     }
 
+    fun getAudioAddress(path: String, cityId: Int, placeId: Int, onSuccess: (Uri) -> Unit) {
+        fireClient.getAudioAddress(path, cityId, placeId) {
+            onSuccess(it)
+        }
+    }
+
     /** UI */
     private fun changeViewVisibility(view: View, toShow: Boolean = false, action: (() -> Unit)? = null) {
         val animEnter = AnimationUtils.loadAnimation(activity, R.anim.anim_alpha_enter)

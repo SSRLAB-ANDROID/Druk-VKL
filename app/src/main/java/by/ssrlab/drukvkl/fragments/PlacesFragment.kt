@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.ssrlab.drukvkl.R
 import by.ssrlab.drukvkl.databinding.FragmentPlacesListBinding
+import by.ssrlab.drukvkl.db.Place
 import by.ssrlab.drukvkl.fragments.base.BaseFragment
 import by.ssrlab.drukvkl.rv.PlacesListAdapter
 
@@ -28,6 +29,8 @@ class PlacesFragment: BaseFragment() {
 
     override fun onStart() {
         super.onStart()
+
+        mainVM.setPlace(Place())
 
         initAdapter()
         mainActivity.showBack(findNavController())

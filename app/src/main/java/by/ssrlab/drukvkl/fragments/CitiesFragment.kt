@@ -8,6 +8,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import by.ssrlab.drukvkl.R
 import by.ssrlab.drukvkl.databinding.FragmentCitiesListBinding
+import by.ssrlab.drukvkl.db.Place
 import by.ssrlab.drukvkl.fragments.base.BaseFragment
 import by.ssrlab.drukvkl.rv.CitiesListAdapter
 import kotlinx.coroutines.delay
@@ -32,6 +33,7 @@ class CitiesFragment: BaseFragment() {
     override fun onStart() {
         super.onStart()
 
+        mainVM.setPlace(Place())
         mainActivity.hideBack()
 
         scope.launch {
