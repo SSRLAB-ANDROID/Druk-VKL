@@ -128,8 +128,8 @@ class FireClient(private val activity: MainActivity? = null) {
         }
     }
 
-    fun getAudioAddress(path: String, cityId: Int, placeId: Int, onSuccess: (Uri) -> Unit) {
-        storage.child("$path/$cityId/audio/$placeId.mp3").downloadUrl.addOnSuccessListener { uri ->
+    fun getAudioAddress(path: String, cityId: Int, placeId: Int, language: String, onSuccess: (Uri) -> Unit) {
+        storage.child("$path/$cityId/audio/${placeId}_$language.mp3").downloadUrl.addOnSuccessListener { uri ->
             onSuccess(uri)
         }
     }

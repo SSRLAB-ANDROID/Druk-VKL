@@ -94,7 +94,7 @@ class MainVM(
     }
 
     fun getAudioAddress(path: String, cityId: Int, placeId: Int, onSuccess: (Uri) -> Unit) {
-        fireClient.getAudioAddress(path, cityId, placeId) {
+        fireClient.getAudioAddress(path, cityId, placeId, language) {
             onSuccess(it)
         }
     }
