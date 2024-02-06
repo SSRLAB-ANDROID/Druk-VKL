@@ -7,20 +7,20 @@ import android.widget.ImageButton
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import by.ssrlab.drukvkl.MainActivity
 import by.ssrlab.drukvkl.R
-import by.ssrlab.drukvkl.client.FireClient
-import by.ssrlab.drukvkl.db.City
-import by.ssrlab.drukvkl.db.Place
 import by.ssrlab.drukvkl.helpers.RV_EMPTY
 import by.ssrlab.drukvkl.helpers.RV_MAIN
 import by.ssrlab.drukvkl.helpers.RV_TITLE
 import coil.load
 
 class PlacesListAdapter(
-    private val list: ArrayList<Place>,
-    private val city: City,
-    private val action: (Place) -> Unit
+    private val activity: MainActivity,
+    private val action: () -> Unit
 ): RecyclerView.Adapter<PlacesListAdapter.PlacesHolder>() {
+
+    private val city = activity.getVM().getCity()
+    private val list = activity.getVM().getPlaces()
 
     inner class PlacesHolder(item: View): RecyclerView.ViewHolder(item)
 
@@ -55,9 +55,12 @@ class PlacesListAdapter(
             val image = itemView.findViewById<ImageView>(R.id.rv_common_logo)
 
             title.text = place.name
-            item.setOnClickListener { action(place) }
+            item.setOnClickListener {
+                activity.getVM().setPlace(place)
+                action()
+            }
 
-            FireClient().getImageAddress("places/${city.id}", place.id.toInt()) {
+            activity.getVM().getImageAddress("places/${city.id}", place.id.toInt()) {
                 image.load(it) {
                     crossfade(true)
                     placeholder(R.drawable.background_img)

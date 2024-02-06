@@ -6,10 +6,10 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.navigation.fragment.findNavController
-import by.ssrlab.drukvkl.client.FireClient
 import by.ssrlab.drukvkl.databinding.FragmentExhibitBinding
 import by.ssrlab.drukvkl.db.Place
 import by.ssrlab.drukvkl.fragments.base.BaseFragment
+import by.ssrlab.drukvkl.helpers.AppMediaPlayer
 import by.ssrlab.drukvkl.rv.pager.TabExhibitAdapter
 import com.google.android.material.tabs.TabLayoutMediator
 
@@ -39,12 +39,10 @@ class ExhibitFragment: BaseFragment() {
         mainActivity.showBack(findNavController())
     }
 
-    private fun setUpTabs(imagesUriList: ArrayList<Uri>) {
-        tabAdapter = TabExhibitAdapter(mainActivity, imagesUriList)
-        binding.exhibitPager.adapter = tabAdapter
+    override fun onStop() {
+        super.onStop()
 
-        //tab, position
-        TabLayoutMediator(binding.exhibitTab, binding.exhibitPager) { _, _ -> }.attach()
+        AppMediaPlayer.pause(binding.exhibitPlay)
     }
 
     private fun setUpData() {
@@ -54,18 +52,31 @@ class ExhibitFragment: BaseFragment() {
             exhibitBody.text = place.text
         }
 
-        loadList()
+        mainVM.loadImagesList {
+            setUpTabs(it)
+        }
+
+        mainVM.getAudioAddress("places", place.cityId.toInt(), place.id.toInt()) {
+            setUpAudio(it)
+        }
     }
 
-    private fun loadList() {
-        if (place.id.toInt() == 165 || place.id.toInt() == 171) {
-            FireClient(mainActivity).getImagesAddresses("places", place.cityId.toInt(), place.id.toInt()) {
-                setUpTabs(it)
+    private fun setUpTabs(imagesUriList: ArrayList<Uri>) {
+        tabAdapter = TabExhibitAdapter(mainActivity, imagesUriList)
+        binding.exhibitPager.adapter = tabAdapter
+
+        //tab, position
+        TabLayoutMediator(binding.exhibitTab, binding.exhibitPager) { _, _ -> }.attach()
+    }
+
+    private fun setUpAudio(uri: Uri) {
+        AppMediaPlayer.initPlayer(mainActivity, uri)
+        binding.exhibitPlay.apply {
+            setOnClickListener {
+                AppMediaPlayer.play(binding.exhibitPlay)
             }
-        } else {
-            FireClient(mainActivity).getImagesAddresses("places", place.cityId.toInt()) {
-                setUpTabs(it)
-            }
+
+            visibility = View.VISIBLE
         }
     }
 }

@@ -1,51 +1,67 @@
 package by.ssrlab.drukvkl
 
+import android.content.Context
+import android.content.ContextWrapper
+import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
-import by.ssrlab.drukvkl.client.FireClient
 import by.ssrlab.drukvkl.databinding.ActivityMainBinding
+import by.ssrlab.drukvkl.helpers.LANGUAGE
+import by.ssrlab.drukvkl.helpers.SHARED_PREFERENCES
 import by.ssrlab.drukvkl.vm.MainVM
 import com.google.android.material.bottomnavigation.BottomNavigationView
+import java.util.Locale
 
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
     private val mainVM: MainVM by viewModels {
-        MainVM.Factory(this@MainActivity)
+        MainVM.Factory(this@MainActivity, sharedPreferences, language)
     }
 
     private lateinit var bottomNav: BottomNavigationView
     private lateinit var navController: NavController
+
+    private lateinit var sharedPreferences: SharedPreferences
+    private lateinit var language: String
+
+    private fun Context.setAppLocale(): Context {
+        sharedPreferences = getSharedPreferences(SHARED_PREFERENCES, MODE_PRIVATE)
+        language = sharedPreferences.getString(LANGUAGE, "en") ?: "en"
+
+        val locale = Locale(language)
+        Locale.setDefault(locale)
+
+        val config = resources.configuration
+        config.setLocale(locale)
+        config.setLayoutDirection(locale)
+
+        return createConfigurationContext(config)
+    }
+
+    override fun attachBaseContext(newBase: Context?) {
+        super.attachBaseContext(ContextWrapper(newBase?.setAppLocale()))
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        binding.mainLanguage.setOnClickListener { mainVM.showLanguageDialog() }
     }
 
     override fun onStart() {
         super.onStart()
 
-        loadData()
+        mainVM.loadCitiesAndPoints()
         setUpBottomNav()
         addGraphListener()
-    }
-
-    private fun loadData() {
-        FireClient().apply {
-            getCities("en") {
-                mainVM.setCities(it)
-            }
-
-            getPoints("en") {
-                mainVM.setPoints(it)
-            }
-        }
     }
 
     private fun setUpBottomNav() {
