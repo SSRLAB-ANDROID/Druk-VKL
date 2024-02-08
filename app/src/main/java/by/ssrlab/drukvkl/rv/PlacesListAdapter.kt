@@ -56,8 +56,16 @@ class PlacesListAdapter(
 
             title.text = place.name
             item.setOnClickListener {
-                activity.getVM().setPlace(place)
-                action()
+                activity.getVM().apply {
+                    setPlace(place)
+
+                    this.loadImagesList {
+                        place.images = it
+                        setPlace(place)
+
+                        action()
+                    }
+                }
             }
 
             activity.getVM().getImageAddress("places/${city.id}", place.id.toInt()) {

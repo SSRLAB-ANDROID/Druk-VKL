@@ -7,10 +7,11 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import by.ssrlab.drukvkl.databinding.TabExhibitBinding
+import by.ssrlab.drukvkl.helpers.PARCELABLE_URI
 import coil.load
 import coil.transform.RoundedCornersTransformation
 
-class TabExhibitFragment(private val imageAddress: Uri): Fragment() {
+class TabExhibitFragment(): Fragment() {
 
     private lateinit var binding: TabExhibitBinding
 
@@ -22,9 +23,12 @@ class TabExhibitFragment(private val imageAddress: Uri): Fragment() {
 
         binding = TabExhibitBinding.inflate(layoutInflater)
 
-        binding.tabImage.load(imageAddress) {
-            crossfade(true)
-            transformations(RoundedCornersTransformation(20f))
+        val imageAddress = arguments?.getString(PARCELABLE_URI)
+        if (!imageAddress.isNullOrEmpty()) {
+            binding.tabImage.load(Uri.parse(imageAddress)) {
+                crossfade(true)
+                transformations(RoundedCornersTransformation(20f))
+            }
         }
 
         return binding.root

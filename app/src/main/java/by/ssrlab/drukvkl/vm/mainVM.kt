@@ -29,7 +29,10 @@ class MainVM(
     private val language: String
 ): ViewModel() {
 
-    private val fireClient = FireClient(activity)
+    private lateinit var fireClient: FireClient
+    fun setFireClient(fireClient: FireClient) {
+        this.fireClient = fireClient
+    }
 
     class Factory(
         private val activity: MainActivity,
