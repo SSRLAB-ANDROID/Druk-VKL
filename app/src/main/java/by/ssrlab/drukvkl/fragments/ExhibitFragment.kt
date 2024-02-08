@@ -50,10 +50,8 @@ class ExhibitFragment: BaseFragment() {
         binding.apply {
             exhibitTitle.text = place.name
             exhibitBody.text = place.text
-        }
 
-        mainVM.loadImagesList {
-            setUpTabs(it)
+            setUpTabs(place.images)
         }
 
         mainVM.getAudioAddress("places", place.cityId.toInt(), place.id.toInt()) {

@@ -9,6 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.setupWithNavController
+import by.ssrlab.drukvkl.client.FireClient
 import by.ssrlab.drukvkl.databinding.ActivityMainBinding
 import by.ssrlab.drukvkl.helpers.LANGUAGE
 import by.ssrlab.drukvkl.helpers.SHARED_PREFERENCES
@@ -59,7 +60,9 @@ class MainActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
 
+        mainVM.setFireClient(FireClient(this@MainActivity))
         mainVM.loadCitiesAndPoints()
+
         setUpBottomNav()
         addGraphListener()
     }
